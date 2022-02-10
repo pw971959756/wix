@@ -6,49 +6,17 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate"></el-button>
     </div>
 
-    <el-table :key="tableKey" v-loading="tableListLoading" :data="tableList"
+    <el-table :key="tableKey" v-loading="tableListLoading" :data="tableList" @sort-change="tableOrder"
               :header-cell-style="{background:'#eef1f6',color:'#606266'}"
+              :default-sort = "{prop: 'lastUpdateDateTime', order: 'descending'}"
               border fit highlight-current-row style="width: 100%;">
-      <el-table-column label="标题" align="center">
-        <template slot-scope="{row}" prop="roleName" sortable>
-          <span>{{ row.wixTitle}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="作者" align="center" prop="roleCode" sortable>
-        <template slot-scope="{row}">
-          <span>{{ row.wixAuthor}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="排版者" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.wixTypesetting}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="出版社" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.wixPublishing}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="链接地址" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.wixLink}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="发表时间" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.wixReleaseDate}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="摘要" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.wixSummary}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="最后更新时间" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.lastUpdateDateTime}}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="wixTitle" label="标题" sortable width="180"></el-table-column>
+      <el-table-column prop="wixAuthor" label="作者" sortable width="180"></el-table-column>
+      <el-table-column prop="wixTypesetting" label="排版者" sortable width="180"></el-table-column>
+      <el-table-column prop="wixPublishing" label="出版社" sortable width="180"></el-table-column>
+      <el-table-column prop="wixReleaseDate" label="发表时间" sortable width="180"></el-table-column>
+      <el-table-column prop="wixSummary" label="摘要" sortable width="180"></el-table-column>
+      <el-table-column prop="lastUpdateDateTime" label="最后更新时间" sortable width="180"></el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="250">
         <template slot-scope="{row,$index}">
           <el-button type="warning" @click="handleUpdate(row)" icon="el-icon-edit" ></el-button>
@@ -174,13 +142,21 @@ export default {
         this.paginationPager()
       })
     },
+    tableOrder(column, prop, order) {
+      this.list.sort(function(a, b) {
+        var nameA = a[column.prop].toUpperCase(); // ignore upper and lowercase
+        var nameB = b[column.prop].toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return column.order === "ascending" ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return column.order === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    },
     paginationPager(){
       this.tableList = this.list.slice(((this.tableQuery.currentPage - 1) * this.tableQuery.pageSize), (this.tableQuery.currentPage * this.tableQuery.pageSize))
-    },
-    getDetail() {
-      wixGet("e4b4b804-3a1e-4f0f-8d76-0bfae48ec76b").then(res => {
-        console.log(res)
-      })
     },
     resetTemp() {
       this.temp = {
