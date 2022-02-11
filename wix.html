@@ -8,6 +8,14 @@
   <link rel="stylesheet" type="text/css" href="static/DataTables/datatables.min.css"/>
   <script src="static/DataTables/jQuery-3.6.0/jquery-3.6.0.js"></script>
   <script type="text/javascript" src="static/DataTables/datatables.min.js"></script>
+  <style>
+    .pull-left{float:left!important;}
+    .pull-right{float:right!important;}
+    .layui-row label{
+      font-weight: bold;
+    }
+  </style>
+
 </head>
 <body>
 
@@ -26,27 +34,93 @@
   </thead>
 </table>
 
+<div class="layui-form" id="dialog" hidden>
+  <div class="layui-row">
+    <div class="layui-col-md6">
+      <label class="layui-form-label">标题：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixTitle">1</div>
+    </div>
+    <div class="layui-col-md6">
+      <label class="layui-form-label">连接地址：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixLink">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md6">
+      <label class="layui-form-label">作者：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixAuthor">1</div>
+    </div>
+    <div class="layui-col-md6">
+      <label class="layui-form-label">排版者：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixTypesetting">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md6">
+      <label class="layui-form-label">出版社：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixPublishing">1</div>
+    </div>
+    <div class="layui-col-md6">
+      <label class="layui-form-label">发布时间：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixReleaseDate">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md12">
+      <label class="layui-form-label">摘要：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixSummary">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md12">
+      <label class="layui-form-label">内容：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixContent">1</div>
+    </div>
+  </div>
+</div>
+
+
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="static/layui/layui.js"></script>
 <script>
-  $(document).ready(function() {
-    $('#example').DataTable( {
+  $(document).ready(function () {
+    var table = $('#example').DataTable({
+      bLengthChange:false,
+      iDisplayLength:15,
+      "dom": '<"pull-left"f><"pull-right"l>tip',
       "ajax": {
         "url": "data/wix-data.json",
         "dataSrc": ""
       },
       "columns": [
-          { "data": "wixTitle" },
-          { "data": "wixAuthor" },
-          { "data": "wixTypesetting" },
-          { "data": "wixPublishing" },
-          { "data": "wixLink" },
-          { "data": "wixReleaseDate" },
-          { "data": "wixSummary" },
-          { "data": "wixContent" },
-      ]
-    } );
-  } );
+        {"data": "wixTitle"},
+        {"data": "wixAuthor"},
+        {"data": "wixTypesetting"},
+        {"data": "wixPublishing"},
+        {"data": "wixLink"},
+        {"data": "wixReleaseDate"},
+        {"data": "wixSummary"},
+        {"data": "wixContent"},
+      ],
+    });
+
+    //对行双击添加监听事件
+    $('#example tbody').on('dblclick', 'tr', function () {
+      var row = table.row( this ).data();
+
+      $('#wixTitle').html(row.wixTitle ? row.wixTitle: '');
+      $('#wixAuthor').html(row.wixAuthor ? row.wixAuthor: '');
+      $('#wixTypesetting').html(row.wixTypesetting ? row.wixTypesetting: '');
+      $('#wixPublishing').html(row.wixPublishing ? row.wixPublishing: '');
+      $('#wixLink').html(row.wixLink ? row.wixLink: '');
+      $('#wixReleaseDate').html(row.wixReleaseDate ? row.wixReleaseDate: '');
+      $('#wixSummary').html(row.wixSummary ? row.wixSummary: '');
+      $('#wixContent').html(row.wixContent ? row.wixContent: '');
+
+      layer.open({type: 1, title: "数据详情", shadeClose: true, skin: 'layui-layer-rim', area: ['800px', '600px'], content: $('#dialog').html()});
+    });
+  });
+
 
   var data = {
     "wixTitle": "12",
@@ -64,7 +138,7 @@
     "ipAddress": "192.168.9.175",
     "mac": "54:05:db:cf:98:1d"
   }
-  // console.log(data)
+  console.log(data)
 </script>
 </body>
 </html>

@@ -8,6 +8,14 @@
   <link rel="stylesheet" type="text/css" href="static/DataTables/datatables.min.css"/>
   <script src="static/DataTables/jQuery-3.6.0/jquery-3.6.0.js"></script>
   <script type="text/javascript" src="static/DataTables/datatables.min.js"></script>
+  <style>
+    .pull-left{float:left!important;}
+    .pull-right{float:right!important;}
+    .layui-row label{
+      font-weight: bold;
+    }
+  </style>
+
 </head>
 <body>
 
@@ -26,45 +34,93 @@
   </thead>
 </table>
 
+<div class="layui-form" id="dialog" hidden>
+  <div class="layui-row">
+    <div class="layui-col-md6">
+      <label class="layui-form-label">标题：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixTitle">1</div>
+    </div>
+    <div class="layui-col-md6">
+      <label class="layui-form-label">连接地址：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixLink">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md6">
+      <label class="layui-form-label">作者：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixAuthor">1</div>
+    </div>
+    <div class="layui-col-md6">
+      <label class="layui-form-label">排版者：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixTypesetting">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md6">
+      <label class="layui-form-label">出版社：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixPublishing">1</div>
+    </div>
+    <div class="layui-col-md6">
+      <label class="layui-form-label">发布时间：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixReleaseDate">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md12">
+      <label class="layui-form-label">摘要：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixSummary">1</div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md12">
+      <label class="layui-form-label">内容：</label>
+      <div class="layui-form-mid layui-word-aux" id="wixContent">1</div>
+    </div>
+  </div>
+</div>
+
+
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="static/layui/layui.js"></script>
 <script>
-  $(document).ready(function() {
-    $('#example').DataTable( {
+  $(document).ready(function () {
+    var table = $('#example').DataTable({
+      bLengthChange:false,
+      iDisplayLength:15,
+      "dom": '<"pull-left"f><"pull-right"l>tip',
       "ajax": {
         "url": "data/wix-data.json",
         "dataSrc": ""
       },
       "columns": [
-        { "data": "wixTitle" },
-        { "data": "wixAuthor" },
-        { "data": "wixTypesetting" },
-        { "data": "wixPublishing" },
-        { "data": "wixLink" },
-        { "data": "wixReleaseDate" },
-        { "data": "wixSummary" },
-        { "data": "wixContent" },
-      ]
-    } );
-  } );
+        {"data": "wixTitle"},
+        {"data": "wixAuthor"},
+        {"data": "wixTypesetting"},
+        {"data": "wixPublishing"},
+        {"data": "wixLink"},
+        {"data": "wixReleaseDate"},
+        {"data": "wixSummary"},
+        {"data": "wixContent"},
+      ],
+    });
 
-  var data = {
-    "wixTitle": "12",
-    "wixAuthor": "12",
-    "wixTypesetting": "12",
-    "wixPublishing": "12",
-    "wixLink": "12",
-    "wixReleaseDate": "2022-02-09",
-    "wixSummary": "12",
-    "wixContent": "12",
-    "id": "713b575b-c396-4eb4-bac3-fabf4c8a02cd",
-    "lastUpdateDateTime": "2022-02-10 09:47:31",
-    "createDateTime": "2022-02-10 09:47:24",
-    "hostname": "DESKTOP-HBDM5H8",
-    "ipAddress": "192.168.9.175",
-    "mac": "54:05:db:cf:98:1d"
-  }
-  // console.log(data)
+    //对行双击添加监听事件
+    $('#example tbody').on('dblclick', 'tr', function () {
+      var row = table.row( this ).data();
+
+      $('#wixTitle').html(row.wixTitle ? row.wixTitle: '');
+      $('#wixAuthor').html(row.wixAuthor ? row.wixAuthor: '');
+      $('#wixTypesetting').html(row.wixTypesetting ? row.wixTypesetting: '');
+      $('#wixPublishing').html(row.wixPublishing ? row.wixPublishing: '');
+      $('#wixLink').html(row.wixLink ? row.wixLink: '');
+      $('#wixReleaseDate').html(row.wixReleaseDate ? row.wixReleaseDate: '');
+      $('#wixSummary').html(row.wixSummary ? row.wixSummary: '');
+      $('#wixContent').html(row.wixContent ? row.wixContent: '');
+
+      layer.open({type: 1, title: "数据详情", shadeClose: true, skin: 'layui-layer-rim', area: ['800px', '600px'], content: $('#dialog').html()});
+    });
+  });
+
 </script>
 </body>
 </html>
