@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>测试 - layui</title>
+  <link rel="stylesheet" href="static/layui/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="static/DataTables/datatables.min.css"/>
+  <script src="static/DataTables/jQuery-3.6.0/jquery-3.6.0.js"></script>
+  <script type="text/javascript" src="static/DataTables/datatables.min.js"></script>
+</head>
+<body>
+
+<table id="example" class="display" style="width:100%">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Position</th>
+    <th>Office</th>
+    <th>Extn.</th>
+    <th>Start date</th>
+    <th>Salary</th>
+  </tr>
+  </thead>
+</table>
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="static/layui/layui.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable( {
+      "ajax": "data/objects.txt",
+      "columns": [
+        { "data": "name" },
+        { "data": "position" },
+        { "data": "office" },
+        { "data": "extn" },
+        { "data": "start_date" },
+        { "data": "salary" }
+      ]
+    } );
+  } );
+</script>
+</body>
+</html>
