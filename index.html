@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>测试 - layui</title>
+  <title>wix</title>
   <link rel="stylesheet" href="static/layui/css/layui.css">
   <link rel="stylesheet" type="text/css" href="static/DataTables/datatables.min.css"/>
   <script src="static/DataTables/jQuery-3.6.0/jquery-3.6.0.js"></script>
@@ -22,14 +22,13 @@
 <table id="example" class="display" style="width:100%">
   <thead>
   <tr>
-    <th>标题</th>
-    <th>作者</th>
-    <th>排版者</th>
-    <th>出版社</th>
-    <th>连接</th>
-    <th>发布时间</th>
-    <th>摘要</th>
-    <th>内容</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Editor</th>
+    <th>Publisher</th>
+    <th>Link</th>
+    <th>Date</th>
+    <th>Abstract</th>
   </tr>
   </thead>
 </table>
@@ -37,43 +36,43 @@
 <div class="layui-form" id="dialog" hidden>
   <div class="layui-row">
     <div class="layui-col-md6">
-      <label class="layui-form-label">标题：</label>
+      <label class="layui-form-label">Title：</label>
       <div class="layui-form-mid layui-word-aux" id="wixTitle">1</div>
     </div>
     <div class="layui-col-md6">
-      <label class="layui-form-label">连接地址：</label>
+      <label class="layui-form-label">Link：</label>
       <div class="layui-form-mid layui-word-aux" id="wixLink">1</div>
     </div>
   </div>
   <div class="layui-row">
     <div class="layui-col-md6">
-      <label class="layui-form-label">作者：</label>
+      <label class="layui-form-label">Author：</label>
       <div class="layui-form-mid layui-word-aux" id="wixAuthor">1</div>
     </div>
     <div class="layui-col-md6">
-      <label class="layui-form-label">排版者：</label>
+      <label class="layui-form-label">Editor：</label>
       <div class="layui-form-mid layui-word-aux" id="wixTypesetting">1</div>
     </div>
   </div>
   <div class="layui-row">
     <div class="layui-col-md6">
-      <label class="layui-form-label">出版社：</label>
+      <label class="layui-form-label">Publisher：</label>
       <div class="layui-form-mid layui-word-aux" id="wixPublishing">1</div>
     </div>
     <div class="layui-col-md6">
-      <label class="layui-form-label">发布时间：</label>
+      <label class="layui-form-label">Date：</label>
       <div class="layui-form-mid layui-word-aux" id="wixReleaseDate">1</div>
     </div>
   </div>
   <div class="layui-row">
     <div class="layui-col-md12">
-      <label class="layui-form-label">摘要：</label>
+      <label class="layui-form-label">Abstract：</label>
       <div class="layui-form-mid layui-word-aux" id="wixSummary">1</div>
     </div>
   </div>
   <div class="layui-row">
     <div class="layui-col-md12">
-      <label class="layui-form-label">内容：</label>
+      <label class="layui-form-label">Content：</label>
       <div class="layui-form-mid layui-word-aux" id="wixContent">1</div>
     </div>
   </div>
@@ -99,8 +98,7 @@
         {"data": "wixPublishing"},
         {"data": "wixLink"},
         {"data": "wixReleaseDate"},
-        {"data": "wixSummary"},
-        {"data": "wixContent"},
+        {"data": "wixSummary"}
       ],
     });
 
@@ -117,7 +115,7 @@
       $('#wixSummary').html(row.wixSummary ? row.wixSummary: '');
       $('#wixContent').html(row.wixContent ? row.wixContent: '');
 
-      layer.open({type: 1, title: "数据详情", shadeClose: true, skin: 'layui-layer-rim', area: ['800px', '600px'], content: $('#dialog').html()});
+      layer.open({type: 1, title: "Data details", shadeClose: true, skin: 'layui-layer-rim', area: ['800px', '600px'], content: $('#dialog').html()});
     });
   });
 
