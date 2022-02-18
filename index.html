@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>wix</title>
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
   <link rel="stylesheet" href="static/layui/css/layui.css">
   <link rel="stylesheet" type="text/css" href="static/DataTables/datatables.min.css"/>
   <script src="static/DataTables/jQuery-3.6.0/jquery-3.6.0.js"></script>
@@ -88,7 +91,7 @@
       iDisplayLength:15,
       "dom": '<"pull-left"f><"pull-right"l>tip',
       "ajax": {
-        "url": "data/wix-data.json",
+        "url": "data/wix-data.json?_=" +new Date().getTime(),
         "dataSrc": ""
       },
       "columns": [
