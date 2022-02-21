@@ -116,7 +116,7 @@ function setTableBody(rows){
   if(rows){
     rows.forEach(function (item,index){
       body += '      <tr data="' + JSON.stringify(item).replace(/\"/g, "'") + '"> \n' +
-              '        <td class="sorting_1">'+item.wixTitle+'XXXX</td> \n'+
+              '        <td class="sorting_1">'+item.wixTitle+'</td> \n'+
               '        <td>'+item.wixAuthor+'</td> \n'+
               '        <td>'+item.wixTypesetting+'</td> \n'+
               '        <td>'+item.wixPublishing+'</td> \n'+
@@ -128,6 +128,7 @@ function setTableBody(rows){
   }
 
   var html = '<!DOCTYPE html> \n'+
+      '<!-- last update time: ' + new Date().toISOString().slice(0, 20) + '--> \n' +
       '<html> \n'+
       '<head> \n'+
       '  <meta charset="utf-8"> \n'+
