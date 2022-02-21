@@ -23,6 +23,7 @@
       <el-table-column prop="wixTypesetting" label="Editor" sortable width="180" />
       <el-table-column prop="wixPublishing" label="Publisher" sortable width="180" />
       <el-table-column prop="wixReleaseDate" label="Date" sortable width="180" />
+      <el-table-column prop="wixLink" label="Link" sortable width="180" />
       <el-table-column prop="wixSummary" label="Abstract" sortable width="180" />
       <el-table-column prop="lastUpdateDateTime" label="Last Update Date" sortable width="180" />
       <el-table-column label="Operate" align="center" class-name="small-padding fixed-width" width="250">
