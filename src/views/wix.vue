@@ -7,28 +7,62 @@
     </div>
 
     <el-table
-      :key="tableKey"
-      v-loading="tableListLoading"
-      :data="tableList"
+      :key="tableKey" v-loading="tableListLoading" :data="tableList"
       :header-cell-style="{background:'#eef1f6',color:'#606266'}"
       :default-sort="{prop: 'lastUpdateDateTime', order: 'descending'}"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;"
+      border fit highlight-current-row style="width: 100%;"
       @sort-change="tableOrder"
     >
-      <el-table-column prop="wixTitle" label="Title" sortable width="180" />
+      <el-table-column sortable align="center" prop="Title" width="250">
+        <template slot-scope="scope">
+          <el-popover placement="top-start" trigger="hover" :disabled="scope.row.wixTitle.length <= 10">
+            <div>{{ scope.row.wixTitle }}</div>
+            <span slot="reference" v-if="scope.row.wixTitle.length <= 30">{{scope.row.wixTitle}}</span>
+            <span slot="reference" v-if="scope.row.wixTitle.length > 30">{{scope.row.wixTitle.substr(0, 30) + "..."}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
       <el-table-column prop="wixAuthor" label="Author" sortable width="180" />
       <el-table-column prop="wixTypesetting" label="Editor" sortable width="180" />
       <el-table-column prop="wixPublishing" label="Publisher" sortable width="180" />
-      <el-table-column prop="wixReleaseDate" label="Date" sortable width="180" />
-      <el-table-column prop="wixLink" label="Link" sortable width="180" />
-      <el-table-column prop="wixSummary" label="Abstract" sortable width="180" />
-      <el-table-column prop="lastUpdateDateTime" label="Last Update Date" sortable width="180" />
+      <el-table-column prop="wixReleaseDate" label="Date" sortable width="100" />
+      <el-table-column prop="wixLink" label="Link" sortable width="300">
+        <template slot-scope="scope">
+          <div v-if="scope.row.wixLink.indexOf('http') != -1">
+            <el-link :underline="false" :href="scope.row.wixLink" target="_blank">
+              <el-popover placement="top-start" width="300" trigger="hover" :disabled="scope.row.wixLink.length <= 10">
+                <div>{{ scope.row.wixLink }}</div>
+                <span slot="reference" v-if="scope.row.wixSummary.length <= 30">{{scope.row.wixLink}}</span>
+                <span slot="reference" v-if="scope.row.wixSummary.length > 30">{{scope.row.wixLink.substr(0, 30) + "..."}}</span>
+              </el-popover>
+            </el-link>
+          </div>
+          <div v-else>
+            <el-popover placement="top-start" trigger="hover" :disabled="scope.row.wixLink.length <= 10">
+              <div>{{ scope.row.wixLink }}</div>
+              <span slot="reference" v-if="scope.row.wixLink.length <= 20">{{scope.row.wixLink}}</span>
+              <span slot="reference" v-if="scope.row.wixLink.length > 20">{{scope.row.wixLink.substr(0, 20) + "..."}}</span>
+            </el-popover>
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column sortable="false" align="center" prop="Abstract" width="300">
+        <template slot-scope="scope">
+          <el-popover placement="top-start" trigger="hover" :disabled="scope.row.wixSummary.length <= 10">
+            <div>{{ scope.row.wixSummary }}</div>
+            <span slot="reference" v-if="scope.row.wixSummary.length <= 30">{{scope.row.wixSummary}}</span>
+            <span slot="reference" v-if="scope.row.wixSummary.length > 30">{{scope.row.wixSummary.substr(0, 30) + "..."}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="lastUpdateDateTime" label="Last Update Date" sortable width="160" />
       <el-table-column label="Operate" align="center" class-name="small-padding fixed-width" width="250">
         <template slot-scope="{row,$index}">
           <el-button type="warning" icon="el-icon-edit" @click="handleUpdate(row)" />
+          <el-button type="warning" icon="el-icon-document-copy" @click="handleCopy(row)" />
           <el-button v-if="row.status!='deleted'" type="danger" icon="el-icon-delete" @click="handleDelete(row,$index)" />
         </template>
       </el-table-column>
@@ -206,6 +240,13 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
     },
+    handleCopy(row) {
+      this.resetTemp()
+      this.temp = row
+      this.temp.id = undefined
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+    },
     handleDelete(row, index) {
       this.$confirm('Are you sure you want to delete?', 'Confirm information', { distinguishCancelAndClose: true, confirmButtonText: '保存', cancelButtonText: '取消' }).then(() => {
         wixDelete(row.id).then(res => {
@@ -213,7 +254,7 @@ export default {
           this.loadListPager()
         })
       })
-    }
+    },
 
   }
 }

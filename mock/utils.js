@@ -115,12 +115,13 @@ function setTableBody(rows){
   var body = '';
   if(rows){
     rows.forEach(function (item,index){
+      var link = item.wixLink.indexOf("http") != -1 ? "<a href='" + item.wixLink + "' target='view_window'>" + item.wixLink + "</a>" : item.wixLink;
       body += '      <tr data="' + JSON.stringify(item).replace(/\"/g, "'") + '"> \n' +
               '        <td class="sorting_1">'+item.wixTitle+'</td> \n'+
               '        <td>'+item.wixAuthor+'</td> \n'+
               '        <td>'+item.wixTypesetting+'</td> \n'+
               '        <td>'+item.wixPublishing+'</td> \n'+
-              '        <td>'+item.wixLink+'</td> \n'+
+              '        <td>'+link+'</td> \n'+
               '        <td>'+item.wixReleaseDate+'</td> \n'+
               '        <td>'+item.wixSummary+'</td> \n'+
               '      </tr> \n';
