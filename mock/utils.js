@@ -113,20 +113,20 @@ function setWixData(data) {
 }
 function setTableBody(rows){
   var body = '';
-  if(rows){
-    rows.forEach(function (item,index){
-      var link = item.wixLink.indexOf("http") != -1 ? "<a href='" + item.wixLink + "' target='view_window'>" + item.wixLink + "</a>" : item.wixLink;
-      body += '      <tr data="' + JSON.stringify(item).replace(/\"/g, "'") + '"> \n' +
-              '        <td class="sorting_1">'+item.wixTitle+'</td> \n'+
-              '        <td>'+item.wixAuthor+'</td> \n'+
-              '        <td>'+item.wixTypesetting+'</td> \n'+
-              '        <td>'+item.wixPublishing+'</td> \n'+
-              '        <td>'+link+'</td> \n'+
-              '        <td>'+item.wixReleaseDate+'</td> \n'+
-              '        <td>'+item.wixSummary+'</td> \n'+
-              '      </tr> \n';
-    })
-  }
+  // if(rows){
+  //   rows.forEach(function (item,index){
+  //     var link = item.wixLink.indexOf("http") != -1 ? "<a href='" + item.wixLink + "' target='view_window'>" + item.wixLink + "</a>" : item.wixLink;
+  //     body += '      <tr data="' + JSON.stringify(item).replace(/\"/g, "'") + '"> \n' +
+  //             '        <td class="sorting_1">'+item.wixTitle+'</td> \n'+
+  //             '        <td>'+item.wixAuthor+'</td> \n'+
+  //             '        <td>'+item.wixTypesetting+'</td> \n'+
+  //             '        <td>'+item.wixPublishing+'</td> \n'+
+  //             '        <td>'+link+'</td> \n'+
+  //             '        <td>'+item.wixReleaseDate+'</td> \n'+
+  //             '        <td>'+item.wixSummary+'</td> \n'+
+  //             '      </tr> \n';
+  //   })
+  // }
 
   var html = '<!DOCTYPE html> \n'+
       '<!-- last update time: ' + new Date().toISOString().slice(0, 20) + '--> \n' +
@@ -146,6 +146,7 @@ function setTableBody(rows){
       '    .pull-left{float:left!important;} \n'+
       '    .pull-right{float:right!important;} \n'+
       '    .layui-row label{font-weight: bold;} \n'+
+      '    .toolbar{ display: contents;} \n'+
       '    #example_filter input {width: 500px;} \n'+
       '  </style> \n'+
       '</head> \n'+
@@ -157,7 +158,7 @@ function setTableBody(rows){
       '      <th>Author</th> \n'+
       '      <th>Editor</th> \n'+
       '      <th>Publisher</th> \n'+
-      '      <th>Link</th> \n'+
+      '      <th>Type</th> \n'+
       '      <th>Date</th> \n'+
       '      <th>Abstract</th> \n'+
       '    </tr> \n'+
@@ -213,6 +214,7 @@ function setTableBody(rows){
       '<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 --> \n'+
       '<script src="static/layui/layui.js"></script> \n'+
       '<script src="static/index.js"></script> \n'+
+      '<script type="text/javascript">var tableList = '+JSON.stringify(rows)+'</script> \n'+
       '</body> \n'+
       '</html> \n';
 
